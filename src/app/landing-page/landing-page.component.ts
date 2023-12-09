@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LandingPageComponent implements OnInit {
   weaponData: any;
-  url: string = 'http://127.0.0.1:8000/api/weapon/ranged';
+  url: string = 'http://127.0.0.1:8000/api/weapons/';
 
   constructor(private http: HttpClient) { }
 
