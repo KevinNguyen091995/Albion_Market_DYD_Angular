@@ -15,7 +15,6 @@ export class TopMemberComponent implements OnInit {
   ngOnInit(): void {
   this.http.get(this.api_url).subscribe((searchRes: any) => {
     this.top_5.push(searchRes);
-    console.log(this.top_5[0].topPlayers);
     })
   }
 }

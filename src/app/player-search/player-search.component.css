@@ -1,9 +1,10 @@
 .head-data{
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .sub-data{
-  font-size: 14px;
+  font-size: 16px;
+  color: yellow
 }
 
 .row-middle {

@@ -16,8 +16,6 @@ export class PlayerSearchComponent {
   constructor(private http: HttpClient) {}
 
   onSubmit() {
-    this.player_data = []
-
     this.http.get(this.search_api + this.searchTerm).subscribe(
       (searchRes: any) => {
         // Check if there are any players in the search result
@@ -28,7 +26,7 @@ export class PlayerSearchComponent {
           // Make another request using the player ID
           this.http.get(this.player_data_api + playerId).subscribe(
             (playerDataRes: any) => {
-              console.log(playerDataRes)
+              this.player_data = [];
               this.player_data.push(playerDataRes)
             },
             (playerDataError) => {

@@ -1,6 +1,6 @@
 <div class="container">
   <!-- Top 5 Guild Members and Info -->
-  <div class="text-center text-light display-6 py-2">
+  <div class="text-center text-light display-4 py-5">
     Top 5 Guild Members
   </div>
 
@@ -10,17 +10,17 @@
     Overall of Top 5
   </div>
 
-  <div *ngIf="top_5 && top_5.length > 0" class="col-md-12 row py-3 justify-content-center py-3 text-light">
+  <div class="col-md-12 row py-3 justify-content-center py-3 text-light">
     <div class="col-md-4 text-center mr-1">
-      <p class="sub-data pt-2">Total Fame: {{ top_5[0].overall.fame | number:'1.0-0' }}</p>
+      <p class="sub-data pt-2">Total Fame: {{ top_5[0]?.overall.fame | number:'1.0-0' }}</p>
     </div>
 
     <div class="col-md-4 text-center mr-1">
-      <p class="sub-data pt-2">Total Kills: {{ top_5[0].overall.kills | number:'1.0-0' }}</p>
+      <p class="sub-data pt-2">Total Kills: {{ top_5[0]?.overall.kills | number:'1.0-0' }}</p>
     </div>
 
     <div class="col-md-4 text-center">
-      <p class="sub-data pt-2">Total Deaths: {{ top_5[0].overall.deaths | number:'1.0-0' }}</p>
+      <p class="sub-data pt-2">Total Deaths: {{ top_5[0]?.overall.deaths | number:'1.0-0' }}</p>
     </div>
   </div>
 
