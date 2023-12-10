@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://gameinfo.albiononline.com",
+    "secure": false,
+    "changeOrigin": true,
+    "protocolRewrite": "https"
+  }
+}
