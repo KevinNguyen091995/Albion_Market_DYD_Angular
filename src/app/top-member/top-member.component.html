@@ -1,0 +1,47 @@
+<div class="container">
+  <!-- Top 5 Guild Members and Info -->
+  <div class="text-center text-light display-6 py-2">
+    Top 5 Guild Members
+  </div>
+
+<hr class="py-1 bg-light">
+
+  <div class="text-center text-light display-6 py-2">
+    Overall of Top 5
+  </div>
+
+  <div *ngIf="top_5 && top_5.length > 0" class="col-md-12 row py-3 justify-content-center py-3 text-light">
+    <div class="col-md-4 text-center mr-1">
+      <p class="sub-data pt-2">Total Fame: {{ top_5[0].overall.fame | number:'1.0-0' }}</p>
+    </div>
+
+    <div class="col-md-4 text-center mr-1">
+      <p class="sub-data pt-2">Total Kills: {{ top_5[0].overall.kills | number:'1.0-0' }}</p>
+    </div>
+
+    <div class="col-md-4 text-center">
+      <p class="sub-data pt-2">Total Deaths: {{ top_5[0].overall.deaths | number:'1.0-0' }}</p>
+    </div>
+  </div>
+
+<hr class="py-1 bg-light">
+
+  <div class="text-center text-light display-6 py-2">
+    Top Members
+  </div>
+
+  <div class="py-5 text-light card bg-black text-center">
+    <div class="row justify-content-around">
+      <div class="col-md-4" *ngFor="let member of top_5[0]?.topPlayers">
+        <div class="card-body py-5">
+          <h5 class="card-title">Member Info</h5>
+          <p class="card-text">Name - {{ member?.Name }}</p>
+          <p class="card-text">Kill Fame - {{ member?.KillFame | number:'1.0-0' }}</p>
+          <p class="card-text">Total Kills - {{ member?.totalKills | number:'1.0-0' }}</p>
+          <p class="card-text">Death Fame - {{ member?.DeathFame | number:'1.0-0' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

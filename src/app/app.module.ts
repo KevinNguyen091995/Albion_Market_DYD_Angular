@@ -7,6 +7,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlayerSearchComponent } from './player-search/player-search.component';
+import { TopMemberComponent } from './top-member/top-member.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { PlayerSearchComponent } from './player-search/player-search.component';
     LandingPageComponent,
     NavbarComponent,
     PlayerSearchComponent,
+    TopMemberComponent,
   ],
   imports: [
     BrowserModule,

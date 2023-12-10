@@ -1,3 +1,10 @@
+<div class="container">
+  <!-- Player Search -->
+  <div class="text-center text-light display-6">
+    Search Player Information
+  </div>
+</div>
+
 <div class="form-outline container py-4" data-mdb-input-init>
   <form (ngSubmit)="onSubmit()">
     <input type="search" id="form1" class="form-control text-center" placeholder="Search Player" aria-label="Search" [(ngModel)]="searchTerm" name="searchTerm" />
@@ -31,10 +38,10 @@
       <span class="head-data text-center">PVE Fame Data</span>
     </div>
 
-    <div class="col-md-12 row-middle py-3 justify-content-center">
+    <div class="col-md-12 row-middle py-3 justify-content-center py-3">
       <div class="col-md-4 text-center mr-1">
         <a class="text-white head-data">Gathering</a>
-        <p class="sub-data">Fiber: {{ player_data[0].LifetimeStatistics.Gathering.Fiber.Total | number:'1.0-0' }}</p>
+        <p class="sub-data pt-2">Fiber: {{ player_data[0].LifetimeStatistics.Gathering.Fiber.Total | number:'1.0-0' }}</p>
         <p class="sub-data">Hide: {{ player_data[0].LifetimeStatistics.Gathering.Hide.Total | number:'1.0-0' }}</p>
         <p class="sub-data">Ore: {{ player_data[0].LifetimeStatistics.Gathering.Ore.Total | number:'1.0-0' }}</p>
         <p class="sub-data">Rock: {{ player_data[0].LifetimeStatistics.Gathering.Rock.Total | number:'1.0-0' }}</p>
@@ -43,14 +50,14 @@
 
       <div class="col-md-4 text-center">
         <a class="text-white head-data">Crafting/Farming/Fishing</a>
-        <p class="sub-data">Crafting: {{ player_data[0].LifetimeStatistics.Crafting.Total | number:'1.0-0' }}</p>
+        <p class="sub-data pt-2">Crafting: {{ player_data[0].LifetimeStatistics.Crafting.Total | number:'1.0-0' }}</p>
         <p class="sub-data">Farming: {{ player_data[0].LifetimeStatistics.FarmingFame | number:'1.0-0' }}</p>
         <p class="sub-data">Fishing: {{ player_data[0].LifetimeStatistics.FishingFame | number:'1.0-0' }}</p>
       </div>
 
       <div class="col-md-4 text-center">
         <a class="text-white head-data">PvE</a>
-        <p class="sub-data">Avalon: {{ player_data[0].LifetimeStatistics.PvE.Avalon | number:'1.0-0' }}</p>
+        <p class="sub-data pt-2">Avalon: {{ player_data[0].LifetimeStatistics.PvE.Avalon | number:'1.0-0' }}</p>
         <p class="sub-data">Corrupted: {{ player_data[0].LifetimeStatistics.PvE.CorruptedDungeon | number:'1.0-0' }}</p>
         <p class="sub-data">Hell Gates: {{ player_data[0].LifetimeStatistics.PvE.Hellgate | number:'1.0-0' }}</p>
         <p class="sub-data">Mists: {{ player_data[0].LifetimeStatistics.PvE.Mists | number:'1.0-0' }}</p>
