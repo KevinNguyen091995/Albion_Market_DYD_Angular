@@ -8,10 +8,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PriceCheckPageComponent implements OnInit {
   api_url: string = 'http://127.0.0.1:8000/api/weapons/';
+  weapon_detail_url: string = 'http://127.0.0.1:8000/api/weapons/';
+
+  weapon_details: any[] = [];
   weapon_data: any[] = [];
+  available_weapons: any[] = [];
+
   selectedClass: string = '';
   selectedCategory: string = '';
-  selectedTier: string = '';
+  selectedWeapon: string = '';
+  selectedTier: number = -1;
+  selectedEnchantment: number = -1;
 
   item_class: { [key: string]: string } = {};
   item_unique_class: Set<any> = new Set<any>();
@@ -20,11 +27,16 @@ export class PriceCheckPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get(this.api_url).subscribe((searchRes: any) => {
+      // All Weapon Data
+      this.weapon_data = searchRes;
+
+      // Check all Unique Classes
       searchRes.forEach((item: any) => {
         this.item_class[item.item_category] = item.item_class;
       });
 
       this.updateUniqueValues();
+      console.log(this.weapon_data);
     });
   }
 
@@ -32,29 +44,79 @@ export class PriceCheckPageComponent implements OnInit {
     this.item_unique_class = new Set(Object.values(this.item_class));
   }
 
-  getItemClassValues(): any[] {
-    let selected_weapons: string[] = [];
+  getCategoryValues(): any[] {
+    let categories: string[] = [];
     const data = Object.keys(this.item_class);
 
     data.forEach((key) => {
       if (this.item_class[key] == this.selectedClass) {
-        selected_weapons.push(key);
+        categories.push(key);
       }
     });
 
-    return selected_weapons;
+    return categories;
+  }
+
+  getItemList(): void {
+    this.available_weapons = [];
+    this.weapon_data.forEach((weapon) => {
+      if (
+        this.selectedCategory === weapon.item_category &&
+        this.selectedClass === weapon.item_class &&
+        this.selectedTier == weapon.tier
+      ) {
+        this.available_weapons.push(weapon);
+      }
+    });
+  }
+
+  getWeaponDetails(): void {
+    this.weapon_details = [];
+
+    this.available_weapons.forEach((weapon) => {
+      if (
+        this.selectedWeapon === weapon.unique_name
+      ) {
+        this.weapon_details.push(weapon);
+      }
+    });
   }
 
   onItemSelected(event: any): void {
     this.selectedClass = event.target.value;
-    this.getItemClassValues();
+    this.getCategoryValues();
   }
 
-  onWeaponSelected(event: any): void {
+  onCategorySelected(event: any): void {
     this.selectedCategory = event.target.value;
+    this.getItemList();
   }
 
   onTierSelected(event: any): void {
     this.selectedTier = event.target.value;
+    this.getItemList();
+  }
+
+  onWeaponSelected(event: any): void {
+    this.selectedWeapon = event.target.value;
+    this.getWeaponDetails()
+  }
+
+  onEnchantmentSelected(event: any): void {
+    this.selectedEnchantment = event.target.value;
+  }
+
+  checkSelected(): boolean {
+    if (
+      (this.selectedCategory.length > 0,
+      this.selectedClass.length > 0,
+      this.selectedTier >= 0,
+      this.selectedWeapon.length > 0,
+      this.selectedEnchantment >= 0)
+    ) {
+      return true;
+    }
+
+    return false;
   }
 }

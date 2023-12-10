@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container-fluid">
   <div class="text-center row justify-content-between">
 
     <!-- Weapon Class -->
-    <div class="col-md-4">
+    <div class="col-md-2">
       <div class="col-md-12 text-white bg-dark text-center">
       <p class="display-6">Class</p>
         <div>
@@ -15,29 +15,65 @@
     </div>
 
     <!-- Weapon SubCategory -->
-    <div class="col-md-4">
+    <div class="col-md-2">
       <div class="col-md-12 text-white bg-dark text-center">
       <p class="display-6">Category</p>
         <div>
+          <select class="p-2 bg-dark text-white" (change)="onCategorySelected($event)">
+              <option value=""> Select A {{ selectedClass.charAt(0).toUpperCase() + selectedClass.slice(1) }} Weapon Class </option>
+             <option class="bg-dark text-white" *ngFor="let category of getCategoryValues()" value="{{ category }}"> {{ category.charAt(0).toUpperCase() + category.slice(1) }} </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tier Weapon -->
+    <div class="col-md-2">
+      <div class="col-md-12 text-white bg-dark text-center">
+      <p class="display-6">Tier</p>
+        <div>
+          <select class="p-2 bg-dark text-white" (change)="onTierSelected($event)">
+             <option value=""> Tier </option>
+             <option class="bg-dark text-white" *ngFor="let i of [3,4,5,6,7,8]" value="{{ i }}"> {{ i }} </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specific Weapon -->
+    <div class="col-md-2">
+      <div class="col-md-12 text-white bg-dark text-center">
+      <p class="display-6">Weapons</p>
+        <div>
           <select class="p-2 bg-dark text-white" (change)="onWeaponSelected($event)">
-             <option class="bg-dark text-white" *ngFor="let category of getItemClassValues()" value="{{ category }}"> {{ category.charAt(0).toUpperCase() + category.slice(1) }} </option>
+             <option value=""> Weapon Name </option>
+             <option class="bg-dark text-white" *ngFor="let weapon of available_weapons" value="{{ weapon.unique_name }}"> {{ weapon.item_name }} </option>
           </select>
         </div>
       </div>
     </div>
 
     <!-- Quality -->
-    <div class="col-md-4">
+    <div class="col-md-2">
       <div class="col-md-12 text-white bg-dark text-center">
-      <p class="display-6">Quality</p>
+      <p class="display-6">Enchantment</p>
         <div>
-          <select class="p-2 bg-dark text-white" (change)="onTierSelected($event)">
-             <option value=""> Tier </option>
+          <select class="p-2 bg-dark text-white" (change)="onEnchantmentSelected($event)">
+             <option value=""> Enchantment # </option>
              <option class="bg-dark text-white" *ngFor="let i of [0,1,2,3,4]" value="{{ i }}"> {{ i }} </option>
           </select>
         </div>
       </div>
     </div>
+
+
+
+    <!-- Render Image -->
+    <div class="py-5" *ngIf="checkSelected()">
+      <img *ngIf="selectedEnchantment == 0" src="{{ weapon_details[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
+      <img *ngIf="selectedEnchantment > 0" src="{{ weapon_details[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
+    </div>
+
 
   </div>
 </div>
