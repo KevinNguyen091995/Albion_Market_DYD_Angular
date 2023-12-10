@@ -1,10 +1,43 @@
-<div class="container bg-dark text-white text-center">
-  <div class="dropdown">
-    <button class="btn btn-secondary" type="button" (click)="toggleDropdown()">
-      Select Category
-    </button>
-    <div *ngIf="showDropdown" class="dropdown-menu">
-      <a class="dropdown-item" *ngFor="let weaponClass of item_class">{{ weaponClass }}</a>
+<div class="container">
+  <div class="text-center row justify-content-between">
+
+    <!-- Weapon Class -->
+    <div class="col-md-4">
+      <div class="col-md-12 text-white bg-dark text-center">
+      <p class="display-6">Class</p>
+        <div>
+          <select class="p-2 bg-dark text-white" (change)="onItemSelected($event)">
+             <option value=""> Select Item Class </option>
+             <option class="bg-dark text-white" *ngFor="let class of item_unique_class" value="{{ class }}"> {{ class.charAt(0).toUpperCase() + class.slice(1) }} </option>
+          </select>
+        </div>
+      </div>
     </div>
+
+    <!-- Weapon SubCategory -->
+    <div class="col-md-4">
+      <div class="col-md-12 text-white bg-dark text-center">
+      <p class="display-6">Category</p>
+        <div>
+          <select class="p-2 bg-dark text-white" (change)="onWeaponSelected($event)">
+             <option class="bg-dark text-white" *ngFor="let category of getItemClassValues()" value="{{ category }}"> {{ category.charAt(0).toUpperCase() + category.slice(1) }} </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quality -->
+    <div class="col-md-4">
+      <div class="col-md-12 text-white bg-dark text-center">
+      <p class="display-6">Quality</p>
+        <div>
+          <select class="p-2 bg-dark text-white" (change)="onTierSelected($event)">
+             <option value=""> Tier </option>
+             <option class="bg-dark text-white" *ngFor="let i of [0,1,2,3,4]" value="{{ i }}"> {{ i }} </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
