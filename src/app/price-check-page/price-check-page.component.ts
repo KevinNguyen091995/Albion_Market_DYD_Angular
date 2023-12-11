@@ -6,13 +6,16 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './price-check-page.component.html',
   styleUrls: ['./price-check-page.component.css'],
 })
+
 export class PriceCheckPageComponent implements OnInit {
   api_url: string = 'http://127.0.0.1:8000/api/weapons/';
   weapon_detail_url: string = 'http://127.0.0.1:8000/api/weapons/';
+  market_api_url: string ='https://west.albion-online-data.com/api/v2/stats/prices/';
 
   weapon_details: any[] = [];
   weapon_data: any[] = [];
   available_weapons: any[] = [];
+  market_data: any[] = [];
 
   selectedClass: string = '';
   selectedCategory: string = '';
@@ -35,13 +38,8 @@ export class PriceCheckPageComponent implements OnInit {
         this.item_class[item.item_category] = item.item_class;
       });
 
-      this.updateUniqueValues();
-      console.log(this.weapon_data);
+      this.item_unique_class = new Set(Object.values(this.item_class));
     });
-  }
-
-  private updateUniqueValues(): void {
-    this.item_unique_class = new Set(Object.values(this.item_class));
   }
 
   getCategoryValues(): any[] {
@@ -74,11 +72,32 @@ export class PriceCheckPageComponent implements OnInit {
     this.weapon_details = [];
 
     this.available_weapons.forEach((weapon) => {
-      if (
-        this.selectedWeapon === weapon.unique_name
-      ) {
+      if (this.selectedWeapon === weapon.unique_name) {
         this.weapon_details.push(weapon);
       }
+    });
+  }
+
+  getMarketValue() {
+    this.market_data = [];
+
+    const api_url =
+      this.market_api_url +
+      this.selectedWeapon +
+      '@' +
+      this.selectedEnchantment;
+
+    if(this.selectedWeapon == ""){
+      null
+    }
+
+    this.http.get(api_url).subscribe((searchRes: any) => {
+      searchRes.forEach((result: any) => {
+        if (result.sell_price_min > 0 || result.buy_price_min > 0) {
+          this.market_data.push(result);
+        }
+      })
+      console.log(this.market_data)
     });
   }
 
@@ -99,7 +118,7 @@ export class PriceCheckPageComponent implements OnInit {
 
   onWeaponSelected(event: any): void {
     this.selectedWeapon = event.target.value;
-    this.getWeaponDetails()
+    this.getWeaponDetails();
   }
 
   onEnchantmentSelected(event: any): void {
@@ -112,8 +131,8 @@ export class PriceCheckPageComponent implements OnInit {
       this.selectedClass.length > 0,
       this.selectedTier >= 0,
       this.selectedWeapon.length > 0,
-      this.selectedEnchantment >= 0)
-    ) {
+      this.selectedEnchantment >= 0))
+      {
       return true;
     }
 

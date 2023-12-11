@@ -65,15 +65,47 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-
-
+<div class="container d-flex justify-content-center">
+  <div class="pt-5 row">
     <!-- Render Image -->
-    <div class="py-5" *ngIf="checkSelected()">
+    <div class="py-5 row" *ngIf="checkSelected()">
       <img *ngIf="selectedEnchantment == 0" src="{{ weapon_details[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
       <img *ngIf="selectedEnchantment > 0" src="{{ weapon_details[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
     </div>
 
+    <!-- Search Market Value -->
+    <button class="btn bg-black text-white rounded  col-md-12" (click)="getMarketValue()">Search Market Value</button>
 
+  </div>
+</div>
+
+<div class="row container-fluid">
+  <div class="text-center text-white py-5 col-md-4">
+    <p class="display-6">Thetford</p>
+
+
+    <div *ngFor="let data of market_data">
+      <div *ngIf="data.city == 'Thetford'">
+        <div class="text-center text-white">
+          Quality: {{ data.quality }} - Buying Price: {{ data.sell_price_min | number:'1.0-0' }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center text-white py-5 col-md-4 display-6">
+    BridgeWatch
+
+
+    <div *ngFor="let data of market_data">
+      <div *ngIf="data.city == 'Thetford'">
+        <div>
+          data.price
+        </div>
+      </div>
+    </div>
   </div>
 </div>
