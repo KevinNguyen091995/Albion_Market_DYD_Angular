@@ -93,9 +93,7 @@ export class PriceCheckPageComponent implements OnInit {
 
     this.http.get(api_url).subscribe((searchRes: any) => {
       searchRes.forEach((result: any) => {
-        if (result.sell_price_min > 0 || result.buy_price_min > 0) {
-          this.market_data.push(result);
-        }
+        this.market_data.push(result);
       })
       console.log(this.market_data)
     });

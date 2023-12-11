@@ -83,28 +83,10 @@
 </div>
 
 <div class="row container-fluid">
-  <div class="text-center text-white py-5 col-md-4">
-    <p class="display-6">Thetford</p>
-
-
-    <div *ngFor="let data of market_data">
-      <div *ngIf="data.city == 'Thetford'">
-        <div class="text-center text-white">
-          Quality: {{ data.quality }} - Buying Price: {{ data.sell_price_min | number:'1.0-0' }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="text-center text-white py-5 col-md-4 display-6">
-    BridgeWatch
-
-
-    <div *ngFor="let data of market_data">
-      <div *ngIf="data.city == 'Thetford'">
-        <div>
-          data.price
-        </div>
+  <div class="text-center text-white py-5 col-md-6">
+  <div *ngFor="let data of market_data">
+      <div class="text-center text-white">
+        City - {{ data.city }} Quality: {{ data.quality }} - Buying Price: {{ data.sell_price_min | number:'1.0-0' }}
       </div>
     </div>
   </div>
