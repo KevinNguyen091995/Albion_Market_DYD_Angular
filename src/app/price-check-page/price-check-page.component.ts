@@ -8,9 +8,9 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class PriceCheckPageComponent implements OnInit {
-  api_url: string = 'http://127.0.0.1:8000/api/weapons/';
-  weapon_detail_url: string = 'http://127.0.0.1:8000/api/weapons/';
-  market_api_url: string ='https://west.albion-online-data.com/api/v2/stats/prices/';
+  api_url: string = 'http://159.89.34.98:8000//api/weapons/';
+  weapon_detail_url: string = 'http://159.89.34.98:8000//api/weapons/';
+  market_api_url: string ='http://159.89.34.98:8000/api/prices/';
 
   weapon_details: any[] = [];
   weapon_data: any[] = [];
@@ -80,22 +80,14 @@ export class PriceCheckPageComponent implements OnInit {
 
   getMarketValue() {
     this.market_data = [];
-
-    const api_url =
-      this.market_api_url +
-      this.selectedWeapon +
-      '@' +
-      this.selectedEnchantment;
+    const api_url: string = this.market_api_url + this.selectedWeapon + '@' + this.selectedEnchantment
 
     if(this.selectedWeapon == ""){
       null
     }
 
     this.http.get(api_url).subscribe((searchRes: any) => {
-      searchRes.forEach((result: any) => {
-        this.market_data.push(result);
-      })
-      console.log(this.market_data)
+      console.log(searchRes)
     });
   }
 

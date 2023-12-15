@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TopMemberComponent implements OnInit {
   top_5: any[] = []
-  api_url: string = '/api/gameinfo/guilds/QLY0eIvEQNa3WJZ_tndijg/data';
+  api_url: string = 'https://gameinfo.albiononline.com/api/gameinfo/guilds/QLY0eIvEQNa3WJZ_tndijg/data';
 
   constructor(private http: HttpClient) {}
 
