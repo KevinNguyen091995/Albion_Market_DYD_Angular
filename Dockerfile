@@ -17,6 +17,8 @@ COPY . .
 #installing deps for project
 RUN npm install
 
+RUN npm install -g @angular/cli@latest
+
 #creating angular build
 RUN ./node_modules/@angular/cli/bin/ng build --configuration=$build_env
 
