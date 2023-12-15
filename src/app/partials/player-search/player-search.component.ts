@@ -8,38 +8,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PlayerSearchComponent {
   player_data: any[] = [];
-  player_id: string = '';
-  searchTerm: string = '';
-  search_api: string = 'https://gameinfo.albiononline.com/api/gameinfo/search?q=';
-  player_data_api: string = 'https://gameinfo.albiononline.com/api/gameinfo/players/';
+  player_name: string = '';
+  api_url: string = 'http://159.89.34.98:8000/api/guildinfo/playersearch/';
 
   constructor(private http: HttpClient) {}
 
   onSubmit() {
-    this.http.get(this.search_api + this.searchTerm).subscribe(
+    this.http.get(this.api_url + this.player_name).subscribe(
       (searchRes: any) => {
-        // Check if there are any players in the search result
-        if (searchRes.players && searchRes.players.length > 0) {
-          // Extract the player ID
-          const playerId = searchRes.players[0].Id;
-
-          // Make another request using the player ID
-          this.http.get(this.player_data_api + playerId).subscribe(
-            (playerDataRes: any) => {
-              this.player_data = [];
-              this.player_data.push(playerDataRes)
-            },
-            (playerDataError) => {
-              console.error('Error fetching player data:', playerDataError);
-            }
-          );
-        } else {
-          console.warn('No players found in the search result.');
-        }
-      },
-      (searchError) => {
-        console.error('Error performing player search:', searchError);
-      }
-    );
+        this.player_data.push(searchRes)
+      });
   }
 }
