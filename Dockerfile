@@ -1,36 +1,29 @@
-# Use an official lightweight Node.js image
+# Use an official lightweight Node.js image for the build stage
 FROM node:18.13-alpine as build
 
-#Accepting build-arg to create environment specific build
-#it is useful when we have multiple environment (e.g: dev, tst, staging, prod)
-#default value is development
-ARG build_env=development
-
-#Creating virtual directory inside docker image
+# Creating a virtual directory inside the Docker image
 WORKDIR /app
 
-RUN npm cache clean --force
-
-#Copying file from local machine to virtual docker image directory
+# Copying files from the local machine to the virtual Docker image directory
 COPY . .
 
-#installing deps for project
+# Installing dependencies for the project
 RUN npm install
 
-RUN npm install -g @angular/cli@latest
+# Installing Angular CLI globally
+RUN npm install -g @angular/cli
 
-#creating angular build
-RUN ./node_modules/@angular/cli/bin/ng build --configuration=$build_env
+# Creating the Angular build
+RUN ng build --configuration=production
 
-#STEP-2 RUN
-#Defining nginx img 
+# Defining the nginx image for the second stage
 FROM nginx:1.20 as ngx
 
-#copying compiled code from dist to nginx folder for serving
-COPY --from=node-helper /app/dist/angular-docker-blog /usr/share/nginx/html
+# Copying compiled code from the build stage to the nginx folder for serving
+COPY --from=build /app/dist/albion_market /usr/share/nginx/html
 
-#copying nginx config from local to image
-COPY /nginx.conf /etc/nginx/conf.d/default.conf
+# Copying nginx config from local to image
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-#exposing internal port
+# Exposing internal port
 EXPOSE 80

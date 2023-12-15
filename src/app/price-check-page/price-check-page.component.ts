@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class PriceCheckPageComponent implements OnInit {
-  api_url: string = 'http://159.89.34.98:8000//api/weapons/';
+  api_url: string = 'http://159.89.34.98:8000/api/weapons/';
   weapon_detail_url: string = 'http://159.89.34.98:8000//api/weapons/';
   market_api_url: string ='http://159.89.34.98:8000/api/prices/';
 
