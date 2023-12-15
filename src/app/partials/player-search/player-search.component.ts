@@ -10,8 +10,8 @@ export class PlayerSearchComponent {
   player_data: any[] = [];
   player_id: string = '';
   searchTerm: string = '';
-  search_api: string = '/api/gameinfo/search?q=';
-  player_data_api: string = 'api/gameinfo/players/';
+  search_api: string = 'https://gameinfo.albiononline.com/api/gameinfo/search?q=';
+  player_data_api: string = 'https://gameinfo.albiononline.com/api/gameinfo/players/';
 
   constructor(private http: HttpClient) {}
 
