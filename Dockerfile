@@ -20,7 +20,7 @@ RUN ng build --configuration=production
 FROM nginx:1.20 as ngx
 
 # Copying compiled code from the build stage to the nginx folder for serving
-COPY --from=build /app/dist/albion_market /usr/share/nginx/html
+COPY --from=build /app/dist/albion-market /usr/share/nginx/html
 
 # Copying nginx config from local to image
 COPY nginx.conf /etc/nginx/conf.d/default.conf
