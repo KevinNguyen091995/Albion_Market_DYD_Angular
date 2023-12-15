@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-top-member',
@@ -13,7 +13,14 @@ export class TopMemberComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-  this.http.get(this.api_url).subscribe((searchRes: any) => {
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Accept-Encoding': 'identity',
+      // Add other headers as needed
+    }),
+  };
+
+  this.http.get(this.api_url, httpOptions).subscribe((searchRes: any) => {
     this.top_5.push(searchRes);
     })
   }
