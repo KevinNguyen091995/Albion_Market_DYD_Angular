@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class PriceCheckPageComponent implements OnInit {
-  api_url: string = 'http://127.0.0.1:8000/api/all/';
+  api_url: string = 'http://159.89.34.98:8000/api/all/';
   market_api_url: string ='http://159.89.34.98:8000/api/prices/';
 
   item_detail: any[] = [];
