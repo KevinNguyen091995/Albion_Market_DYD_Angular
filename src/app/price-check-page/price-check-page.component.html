@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="text-center row justify-content-between">
 
-    <!-- Weapon Class -->
+    <!-- Item Class -->
     <div class="col-md-2">
       <div class="col-md-12 text-white bg-dark text-center">
       <p class="display-6">Class</p>
@@ -14,20 +14,20 @@
       </div>
     </div>
 
-    <!-- Weapon SubCategory -->
+    <!-- Item SubCategory -->
     <div class="col-md-2">
       <div class="col-md-12 text-white bg-dark text-center">
       <p class="display-6">Category</p>
         <div>
           <select class="p-2 bg-dark text-white" (change)="onCategorySelected($event)">
-              <option value=""> Select A {{ selectedClass.charAt(0).toUpperCase() + selectedClass.slice(1) }} Weapon Class </option>
+              <option value=""> Select A {{ selectedClass.charAt(0).toUpperCase() + selectedClass.slice(1) }} Item Class </option>
              <option class="bg-dark text-white" *ngFor="let category of getCategoryValues()" value="{{ category }}"> {{ category.charAt(0).toUpperCase() + category.slice(1) }} </option>
           </select>
         </div>
       </div>
     </div>
 
-    <!-- Tier Weapon -->
+    <!-- Tier Item -->
     <div class="col-md-2">
       <div class="col-md-12 text-white bg-dark text-center">
       <p class="display-6">Tier</p>
@@ -40,14 +40,14 @@
       </div>
     </div>
 
-    <!-- Specific Weapon -->
+    <!-- Specific Item -->
     <div class="col-md-2">
       <div class="col-md-12 text-white bg-dark text-center">
-      <p class="display-6">Weapons</p>
+      <p class="display-6">Items</p>
         <div>
-          <select class="p-2 bg-dark text-white" (change)="onWeaponSelected($event)">
-             <option value=""> Weapon Name </option>
-             <option class="bg-dark text-white" *ngFor="let weapon of available_weapons" value="{{ weapon.unique_name }}"> {{ weapon.item_name }} </option>
+          <select class="p-2 bg-dark text-white" (change)="onSpecificItemSelected($event)">
+             <option value=""> Item Name </option>
+             <option class="bg-dark text-white" *ngFor="let item of available_items" value="{{ item.unique_name }}"> {{ item.item_name }} </option>
           </select>
         </div>
       </div>
@@ -72,8 +72,9 @@
   <div class="pt-5 row">
     <!-- Render Image -->
     <div class="py-5 row" *ngIf="checkSelected()">
-      <img *ngIf="selectedEnchantment == 0" src="{{ weapon_details[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
-      <img *ngIf="selectedEnchantment > 0" src="{{ weapon_details[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
+      {{ item_detail }}
+      <img *ngIf="selectedEnchantment == 0" src="{{ item_detail[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
+      <img *ngIf="selectedEnchantment > 0" src="{{ item_detail[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
     </div>
 
     <!-- Search Market Value -->

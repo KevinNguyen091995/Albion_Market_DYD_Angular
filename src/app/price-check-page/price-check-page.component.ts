@@ -8,18 +8,17 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class PriceCheckPageComponent implements OnInit {
-  api_url: string = 'http://159.89.34.98:8000/api/weapons/';
-  weapon_detail_url: string = 'http://159.89.34.98:8000//api/weapons/';
+  api_url: string = 'http://127.0.0.1:8000/api/all/';
   market_api_url: string ='http://159.89.34.98:8000/api/prices/';
 
-  weapon_details: any[] = [];
-  weapon_data: any[] = [];
-  available_weapons: any[] = [];
+  item_detail: any[] = [];
+  item_data: any[] = [];
+  available_items: any[] = [];
   market_data: any[] = [];
 
   selectedClass: string = '';
   selectedCategory: string = '';
-  selectedWeapon: string = '';
+  selectedItem: string = '';
   selectedTier: number = -1;
   selectedEnchantment: number = -1;
 
@@ -30,14 +29,15 @@ export class PriceCheckPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get(this.api_url).subscribe((searchRes: any) => {
-      // All Weapon Data
-      this.weapon_data = searchRes;
+      // All Item API Data
+      this.item_data = searchRes;
 
-      // Check all Unique Classes
+      // Read All Unique Categories
       searchRes.forEach((item: any) => {
-        this.item_class[item.item_category] = item.item_class;
+        this.item_class[item.item_sub_category] = item.item_class;
       });
 
+      // Pushes All Unique Classes INTO a Object
       this.item_unique_class = new Set(Object.values(this.item_class));
     });
   }
@@ -56,33 +56,35 @@ export class PriceCheckPageComponent implements OnInit {
   }
 
   getItemList(): void {
-    this.available_weapons = [];
-    this.weapon_data.forEach((weapon) => {
+    this.available_items = [];
+    this.item_data.forEach((item) => {
       if (
-        this.selectedCategory === weapon.item_category &&
-        this.selectedClass === weapon.item_class &&
-        this.selectedTier == weapon.tier
+        this.selectedCategory === item.item_sub_category &&
+        this.selectedClass === item.item_class &&
+        this.selectedTier == item.tier
       ) {
-        this.available_weapons.push(weapon);
+        this.available_items.push(item);
       }
     });
   }
 
-  getWeaponDetails(): void {
-    this.weapon_details = [];
+  getItemDetails(): void {
+    this.item_detail = [];
 
-    this.available_weapons.forEach((weapon) => {
-      if (this.selectedWeapon === weapon.unique_name) {
-        this.weapon_details.push(weapon);
+    this.available_items.forEach((item) => {
+      if (this.selectedItem === item.unique_name) {
+        this.item_detail.push(item);
       }
     });
+
+    console.log(this.item_detail)
   }
 
   getMarketValue() {
     this.market_data = [];
-    const api_url: string = this.market_api_url + this.selectedWeapon + '@' + this.selectedEnchantment
+    const api_url: string = this.market_api_url + this.selectedItem + '@' + this.selectedEnchantment
 
-    if(this.selectedWeapon == ""){
+    if(this.selectedItem == ""){
       null
     }
 
@@ -103,12 +105,12 @@ export class PriceCheckPageComponent implements OnInit {
 
   onTierSelected(event: any): void {
     this.selectedTier = event.target.value;
-    this.getItemList();
+    this.getItemList(); 
   }
 
-  onWeaponSelected(event: any): void {
-    this.selectedWeapon = event.target.value;
-    this.getWeaponDetails();
+  onSpecificItemSelected(event: any): void {
+    this.selectedItem = event.target.value;
+    this.getItemDetails();
   }
 
   onEnchantmentSelected(event: any): void {
@@ -120,7 +122,7 @@ export class PriceCheckPageComponent implements OnInit {
       (this.selectedCategory.length > 0,
       this.selectedClass.length > 0,
       this.selectedTier >= 0,
-      this.selectedWeapon.length > 0,
+      this.selectedItem.length > 0,
       this.selectedEnchantment >= 0))
       {
       return true;
