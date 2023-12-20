@@ -11,6 +11,7 @@ import { TopMemberComponent } from './partials/top-member/top-member.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PriceCheckPageComponent } from './price-check-page/price-check-page.component';
 import { FooterComponent } from './partials/footer/footer.component';
+import { DateFormatPipe } from './partials/pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FooterComponent } from './partials/footer/footer.component';
     TopMemberComponent,
     PriceCheckPageComponent,
     FooterComponent,
+    DateFormatPipe,
   ],
   imports: [
     BrowserModule,

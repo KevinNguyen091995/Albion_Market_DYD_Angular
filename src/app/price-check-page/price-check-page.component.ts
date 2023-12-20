@@ -9,12 +9,13 @@ import { HttpClient } from '@angular/common/http';
 
 export class PriceCheckPageComponent implements OnInit {
   api_url: string = 'http://159.89.34.98:8000/api/all/';
-  market_api_url: string ='http://159.89.34.98:8000/api/prices/';
+  market_api_url: string ='http://127.0.0.1:8000/api/prices/';
 
   item_detail: any[] = [];
   item_data: any[] = [];
   available_items: any[] = [];
   market_data: any[] = [];
+  market_item: any[] = [];
 
   selectedClass: string = '';
   selectedCategory: string = '';
@@ -81,15 +82,18 @@ export class PriceCheckPageComponent implements OnInit {
   }
 
   getMarketValue() {
-    this.market_data = [];
-    const api_url: string = this.market_api_url + this.selectedItem + '@' + this.selectedEnchantment
-
-    if(this.selectedItem == ""){
-      null
+    this.market_item = [];
+    const api_url: string = this.market_api_url + this.selectedItem + '@' + this.selectedEnchantment;
+  
+    if (this.selectedItem === "") {
+      return; // early return or handle the case where selectedItem is empty
     }
-
+  
     this.http.get(api_url).subscribe((searchRes: any) => {
-      console.log(searchRes)
+      this.market_item = searchRes; // assuming searchRes is an array of items
+  
+      // Sort the market_item array by QualityLevel
+      this.market_item.sort((a, b) => a.QualityLevel - b.QualityLevel);
     });
   }
 
@@ -130,4 +134,5 @@ export class PriceCheckPageComponent implements OnInit {
 
     return false;
   }
+  
 }

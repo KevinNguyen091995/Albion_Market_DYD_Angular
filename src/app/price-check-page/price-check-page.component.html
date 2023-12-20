@@ -7,7 +7,8 @@
       <p class="display-6">Class</p>
         <div>
           <select class="p-2 bg-dark text-white" (change)="onItemSelected($event)">
-             <option value=""> Select Item Class </option>
+             <option *ngIf="item_unique_class.size > 0" value=""> Select Item Class </option>
+             <option *ngIf="item_unique_class.size <= 0" value=""> Loading Data </option>
              <option class="bg-dark text-white" *ngFor="let class of item_unique_class" value="{{ class }}"> {{ class.charAt(0).toUpperCase() + class.slice(1) }} </option>
           </select>
         </div>
@@ -20,7 +21,8 @@
       <p class="display-6">Category</p>
         <div>
           <select class="p-2 bg-dark text-white" (change)="onCategorySelected($event)">
-              <option value=""> Select A {{ selectedClass.charAt(0).toUpperCase() + selectedClass.slice(1) }} Item Class </option>
+              <option *ngIf="item_unique_class.size > 0" value=""> Select A {{ selectedClass.charAt(0).toUpperCase() + selectedClass.slice(1) }} Item Class </option>
+              <option *ngIf="item_unique_class.size <= 0" value=""> Loading Data </option>
              <option class="bg-dark text-white" *ngFor="let category of getCategoryValues()" value="{{ category }}"> {{ category.charAt(0).toUpperCase() + category.slice(1) }} </option>
           </select>
         </div>
@@ -33,7 +35,8 @@
       <p class="display-6">Tier</p>
         <div>
           <select class="p-2 bg-dark text-white" (change)="onTierSelected($event)">
-             <option value=""> Tier </option>
+             <option *ngIf="item_unique_class.size > 0" value=""> Tier </option>
+             <option *ngIf="item_unique_class.size <= 0" value=""> Loading Data </option>
              <option class="bg-dark text-white" *ngFor="let i of [3,4,5,6,7,8]" value="{{ i }}"> {{ i }} </option>
           </select>
         </div>
@@ -46,7 +49,8 @@
       <p class="display-6">Items</p>
         <div>
           <select class="p-2 bg-dark text-white" (change)="onSpecificItemSelected($event)">
-             <option value=""> Item Name </option>
+             <option *ngIf="item_unique_class.size > 0" value=""> Item Name </option>
+             <option *ngIf="item_unique_class.size <= 0" value=""> Loading Data </option>
              <option class="bg-dark text-white" *ngFor="let item of available_items" value="{{ item.unique_name }}"> {{ item.item_name }} </option>
           </select>
         </div>
@@ -59,7 +63,8 @@
       <p class="display-6">Enchantment</p>
         <div>
           <select class="p-2 bg-dark text-white" (change)="onEnchantmentSelected($event)">
-             <option value=""> Enchantment # </option>
+             <option *ngIf="item_unique_class.size > 0" value=""> Enchantment # </option>
+             <option *ngIf="item_unique_class.size <= 0" value=""> Loading Data </option>
              <option class="bg-dark text-white" *ngFor="let i of [0,1,2,3,4]" value="{{ i }}"> {{ i }} </option>
           </select>
         </div>
@@ -69,26 +74,96 @@
 </div>
 
 <div class="container d-flex justify-content-center">
-  <div class="pt-5 row">
+  <div class="pt-3 row">
     <!-- Render Image -->
-    <div class="py-5 row" *ngIf="checkSelected()">
+    <div class="py-2 row" *ngIf="checkSelected()">
       {{ item_detail }}
-      <img *ngIf="selectedEnchantment == 0" src="{{ item_detail[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
-      <img *ngIf="selectedEnchantment > 0" src="{{ item_detail[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
+      <img *ngIf="selectedEnchantment == 0" class="w-75" src="{{ item_detail[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
+      <img *ngIf="selectedEnchantment > 0" class="w-75" src="{{ item_detail[0].image_url }}@{{ selectedEnchantment }}" alt="Failed To Load Image">
     </div>
 
     <!-- Search Market Value -->
-    <button class="btn bg-black text-white rounded  col-md-12" (click)="getMarketValue()">Search Market Value</button>
+    <button class="btn bg-black text-white rounded col-md-12" (click)="getMarketValue()">Search Market Value</button>
 
   </div>
 </div>
 
-<div class="row container-fluid">
-  <div class="text-center text-white py-5 col-md-6">
-  <div *ngFor="let data of market_data">
-      <div class="text-center text-white">
-        City - {{ data.city }} Quality: {{ data.quality }} - Buying Price: {{ data.sell_price_min | number:'1.0-0' }}
-      </div>
+<div class="container row p-5 m-auto">
+  <div class="card text-center col-sm-6 col-md-4 bg-dark text-white p-4">
+    <div class="card-header">
+      Martlock
     </div>
+
+    <div *ngFor="let market_data of market_item" card-body>
+      <div *ngIf="market_data.Location.toLowerCase().includes('martlock')">
+        <div class="pt-3">Quality: {{ market_data.QualityLevel }} - Silver: {{ market_data.UnitPriceSilver }}</div>
+        <div class="">Last Updated: {{ market_data.last_updated | dateFormat }} </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="card text-center col-sm-6 col-md-4 bg-dark text-white p-4">
+    <div class="card-header">
+      Lymhurst
+    </div>
+
+    <div *ngFor="let market_data of market_item" card-body>
+      <div *ngIf="market_data.Location.toLowerCase().includes('lymhurst')">
+        <div class="pt-3">Quality: {{ market_data.QualityLevel }} - Silver: {{ market_data.UnitPriceSilver }}</div>
+        <div class="">Last Updated: {{ market_data.last_updated | dateFormat }} </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="card text-center col-sm-6 col-md-4 bg-dark text-white p-4">
+    <div class="card-header">
+      Fort Sterling
+    </div>
+
+    <div *ngFor="let market_data of market_item" card-body>
+      <div *ngIf="market_data.Location.toLowerCase().includes('sterling')">
+        <div class="pt-3">Quality: {{ market_data.QualityLevel }} - Silver: {{ market_data.UnitPriceSilver }}</div>
+        <div class="">Last Updated: {{ market_data.last_updated | dateFormat }} </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="card text-center col-sm-6 col-md-4 bg-dark text-white p-4">
+    <div class="card-header">
+      Thetford
+    </div>
+
+    <div *ngFor="let market_data of market_item" card-body>
+      <div *ngIf="market_data.Location.toLowerCase().includes('thetford')">
+        <div class="pt-3">Quality: {{ market_data.QualityLevel }} - Silver: {{ market_data.UnitPriceSilver }}</div>
+        <div class="">Last Updated: {{ market_data.last_updated | dateFormat }} </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="card text-center col-sm-6 col-md-4 bg-dark text-white p-4">
+    <div class="card-header">
+      Bridgewatch
+    </div>
+    
+    <div *ngFor="let market_data of market_item" card-body>
+      <div *ngIf="market_data.Location.toLowerCase().includes('bridgewatch')">
+        <div class="pt-3">Quality: {{ market_data.QualityLevel }} - Silver: {{ market_data.UnitPriceSilver }}</div>
+        <div class="">Last Updated: {{ market_data.last_updated | dateFormat }} </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="card text-center col-sm-6 col-md-4 bg-dark text-white p-4">
+    <div class="card-header">
+      Caerleon
+    </div>
+
+    <div *ngFor="let market_data of market_item" card-body>
+      <div *ngIf="market_data.Location.toLowerCase().includes('caerleon')">
+        <div class="pt-3">Quality: {{ market_data.QualityLevel }} - Silver: {{ market_data.UnitPriceSilver }}</div>
+        <div class="">Last Updated: {{ market_data.last_updated | dateFormat }} </div>
+        </div>
+      </div>
   </div>
 </div>
